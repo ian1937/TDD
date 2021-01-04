@@ -1,18 +1,31 @@
-import unittest
-import app
+import pytest
+from app import app
 
 
-class TestHomeRoute(unittest.TestCase):
+@pytest.fixture
+def client():
+    app.config['TESTING'] = True
 
-    def setUp(self):
-        app.app.config['TESTING'] = True
-        self.app = app.app.test_client()
+    with app.test_client() as client:
+        yield client
 
-    def test_page_displays_html(self):
-        response = self.app.get('/')
+
+class TestHomeRoute:
+
+    def response_data(self, client):
+        response = client.get('/')
         content = response.data
-        self.assertIn(b'</html>', content)
+        return content
 
+    @pytest.mark.parametrize("attribute", [
+        b"html",
+        b"head",
+        b"css",
+        b"body",
+        b"form",
+        b"input",
+        b"submit",
+    ])
 
-if __name__ == '__main__':
-    unittest.main()
+    def test_has_attribute(self, client, attribute):
+        assert (attribute) in self.response_data(client)

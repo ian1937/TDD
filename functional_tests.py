@@ -19,12 +19,12 @@ class TestMainPage(unittest.TestCase):
 
     # The page has an input that says 'Your To-Do'
     # I then input my to-do plan
-    # def test_input_for_todo(self):
-    #     input = self.browser.find_element_by_name('input')
-    #     input.send_keys('Say Hello')
-    #     input.send_keys(Keys.ENTER)
-    #     time.sleep(2)
-    #     self.assertIn('html', self.browser.page_source)
+    def test_input_for_todo(self):
+        input = self.browser.find_element_by_name('input')
+        input.send_keys('Say Hello')
+        input.send_keys(Keys.ENTER)
+        time.sleep(2)
+        self.assertIn('html', self.browser.page_source)
 
 
 
