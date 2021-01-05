@@ -19,17 +19,14 @@ class TestMainPage(unittest.TestCase):
 
     # The page has an input that says 'Your To-Do'
     # I then input my to-do plan
-    def test_input_for_todo(self):
+    # Then I press a button that says 'Submit'
+    def test_submit_and_data_retrieval(self):
         input = self.browser.find_element_by_name('input')
         input.send_keys('Say Hello')
-        input.send_keys(Keys.ENTER)
-        time.sleep(2)
-        self.assertIn('html', self.browser.page_source)
-
-
-
-    # Then I press a button that says 'Submit'
-
+        submit = self.browser.find_element_by_name('input')
+        submit.click()
+        time.sleep(3)
+        self.assertIn('Say Hello', self.browser.page_source)
 
     # The page reloads and my to-do is now listed on the page
     # It's still asking me for more To-Do

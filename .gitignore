@@ -1,5 +1,14 @@
-chromedriver.exe
-__pycache__
-*.pyc
+# Virtual Environment
 venv
+
+# Database
+*.db
+
+# Driver for Selenium
+chromedriver.exe
+
+# Others
+__pycache__
 .pytest_cache
+*.pyc
+debug.log
