@@ -34,6 +34,5 @@ class TestMainPage(unittest.TestCase):
     # The page reloads again and added another to-do with the one before
 
 
-
 if __name__ == '__main__':
     unittest.main(warnings='ignore')
