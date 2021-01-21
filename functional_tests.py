@@ -39,16 +39,19 @@ class TestMainPage(TestBase):
     # I input another one
     # The page reloads again and added another product with the one before
     def test_submit_another_data(self):
+        current_page = self.browser.page_source
         self.input_data('Second Item')
         time.sleep(3)
+        self.assertNotEqual(current_page, self.browser.page_source)
         self.assertIn('Second Item', self.browser.page_source)
 
     # I tried inserting a blank data
     # It told me "Data Required"
     def test_submit_blank_data(self):
+        current_page = self.browser.page_source
         self.input_data('')
         time.sleep(3)
-        self.assertIn('Data Required', self.browser.page_source)
+        self.assertEqual(current_page, self.browser.page_source)
 
 
 if __name__ == '__main__':

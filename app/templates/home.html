@@ -10,8 +10,10 @@
 <body>
     <form method="POSt" action="{{ url_for('home') }}">
         {{ form.hidden_tag() }}
+
         {{ form.name.label }}
         {{ form.name }}
+
         {{ form.submit.label }}
         {{ form.submit }}
     </form>
