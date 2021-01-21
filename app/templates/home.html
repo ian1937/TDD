@@ -9,9 +9,11 @@
 </head>
 <body>
     <form method="POSt" action="{{ url_for('home') }}">
-        {{ csrf_token }}
-        <input name= "input" type="text">
-        <input name="submit" type="submit">
+        {{ form.hidden_tag() }}
+        {{ form.name.label }}
+        {{ form.name }}
+        {{ form.submit.label }}
+        {{ form.submit }}
     </form>
     <div>
         <ul>

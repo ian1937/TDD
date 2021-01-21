@@ -14,6 +14,7 @@ def create_app(config_name):
         from app.models import Product
 
         db.init_app(app)
+        db.drop_all()
         db.create_all()
 
         from app import product

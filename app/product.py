@@ -8,10 +8,10 @@ from app.forms import ProductForm
 
 @current_app.route('/', methods=['GET', 'POST'])
 def home():
-    form = ProductForm
+    form = ProductForm()
     products = Product.query.all()
     if request.method == 'POST':
-        product = Product(name=request.form['input'])
+        product = Product(name=form.name.data)
         db.session.add(product)
         db.session.commit()
         products = Product.query.all()
