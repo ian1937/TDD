@@ -21,7 +21,7 @@ class TestBase(unittest.TestCase):
         submit.click()
 
 
-class TestMainPage(TestBase):
+class TestProductPage(TestBase):
     # The browser shows me a HTML page
     def test_page_loads_up(self):
         self.assertIn('Product', self.browser.title)
@@ -38,7 +38,7 @@ class TestMainPage(TestBase):
     # It's still asking me for more items
     # I input another one
     # The page reloads again and added another product with the one before
-    def test_submit_another_data(self):
+    def test_submit_another_item(self):
         current_page = self.browser.page_source
         self.input_data('Second Item')
         time.sleep(3)
@@ -47,12 +47,21 @@ class TestMainPage(TestBase):
 
     # I tried inserting a blank data
     # It told me "Data Required"
-    def test_submit_blank_data(self):
+    def test_submit_blank_item(self):
         current_page = self.browser.page_source
         self.input_data('')
         time.sleep(3)
         self.assertEqual(current_page, self.browser.page_source)
 
+    # There's a delete button on every product
+    # I push the button on one of them
+    # The page reloads and that product is gone
+    def test_delete_item(self):
+        self.input_data('Test')
+        current_page = self.browser.page_source
+        delete = self.browser.find_element_by_name('delete_1')
+        delete.click()
+        self.assertNotEqual(current_page, self.browser.page_source)
 
 if __name__ == '__main__':
     unittest.main(warnings='ignore')

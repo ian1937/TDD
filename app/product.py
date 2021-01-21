@@ -7,7 +7,7 @@ from app.forms import ProductForm
 
 
 @current_app.route('/', methods=['GET', 'POST'])
-def home():
+def product():
     form = ProductForm()
     if request.method == 'POST':
         product = Product(name=form.name.data)
@@ -15,3 +15,11 @@ def home():
         db.session.commit()
     products = Product.query.all()
     return render_template('home.html', products=products, form=form)
+
+
+@current_app.route('/delete/<int:id>', methods=['POST'])
+def delete_product(id):
+    product = Product.query.filter_by(id=id).first_or_404()
+    db.session.delete(product)
+    db.session.commit()
+    return redirect(url_for('product'))
