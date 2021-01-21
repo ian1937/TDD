@@ -24,7 +24,7 @@ class TestMainPage(unittest.TestCase):
     def test_submit_and_data_retrieval(self):
         input = self.browser.find_element_by_name('input')
         input.send_keys('Say Hello')
-        submit = self.browser.find_element_by_name('input')
+        submit = self.browser.find_element_by_name('submit')
         submit.click()
         time.sleep(3)
         self.assertIn('Say Hello', self.browser.page_source)

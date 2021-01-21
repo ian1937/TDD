@@ -1,18 +1,15 @@
 import os
 import pytest
 import tempfile
-from app import app, db
+from app import db
+from flask import current_app
 from app.models import Product
 
 
 class TestBase:
     @pytest.fixture(scope='session', autouse=True)
     def client(self):
-        app.config['TESTING'] = True
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
-        app.app_context().push()
-
-        with app.test_client() as client:
+        with current_app.test_client() as client:
             db.create_all()
             yield client
 
@@ -45,19 +42,19 @@ class TestView(TestBase):
 
 class TestDatabase(TestBase):
     def test_database_is_working(self):
-        product1 = Product(text="First Product")
-        product2 = Product(text="Second Product")
+        product1 = Product(name="First Product")
+        product2 = Product(name="Second Product")
 
         db.session.add(product1)
         db.session.add(product2)
 
         db.session.commit()
 
-        product_1 = Product.query.filter_by(text="First Product").first()
-        product_2 = Product.query.filter_by(text="Second Product").first()
+        product_1 = Product.query.filter_by(name="First Product").first()
+        product_2 = Product.query.filter_by(name="Second Product").first()
 
-        assert "First Product" in product_1.text
-        assert "Second Product" in product_2.text
+        assert "First Product" in product_1.name
+        assert "Second Product" in product_2.name
         
     def test_products_is_saved(self):
         assert 3 == Product.query.count()
@@ -65,3 +62,8 @@ class TestDatabase(TestBase):
     def test_data_is_rendered(self, client):
         assert b"First Product" in self.response_data(client)
         assert b"Second Product" in self.response_data(client)
+
+
+class TestForm(TestBase):
+    def test_uses_wtfform(self):
+        pass
